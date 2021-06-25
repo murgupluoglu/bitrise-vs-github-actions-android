@@ -26,7 +26,7 @@ jobs:
       - name: Install Fastlane Dependencies
         run: gem install bundler && bundle install
 
-      - name: Run unit tests
+      - name: Run android lint
         run: fastlane run_lint
 
       - name: Run unit tests
