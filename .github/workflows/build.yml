@@ -30,8 +30,7 @@ jobs:
         run: fastlane run_lint
 
       - name: Run unit tests
-        run: |
-          fastlane run_unit_tests
+        run: fastlane run_unit_tests
 
       - name: Generate Signed Test Apk
         run: |
