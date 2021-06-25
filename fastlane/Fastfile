@@ -25,6 +25,10 @@ platform :android do
                 "android.injected.signing.key.password" => options[:key_password]})
       end
 
+     lane :run_lint do
+        gradle(task: "lint")
+     end
+
      lane :run_unit_tests do
         gradle(task: "test")
      end

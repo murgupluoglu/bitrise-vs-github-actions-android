@@ -27,6 +27,9 @@ jobs:
         run: gem install bundler && bundle install
 
       - name: Run unit tests
+        run: fastlane run_lint
+
+      - name: Run unit tests
         run: |
           fastlane run_unit_tests
 
