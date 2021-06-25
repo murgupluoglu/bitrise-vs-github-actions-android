@@ -1,0 +1,36 @@
+name: Android Release CI
+
+on:
+  push:
+    tags:
+      - '*-googleplay'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Install Fastlane Dependencies
+        run: gem install bundler && bundle install
+
+      - name: Run unit tests
+        run: |
+          fastlane run_unit_tests
+
+      - name: Generate Signed Test Apk And Upload to App Center
+        run: |
+          sudo bash -c "echo '${{ secrets.TEST_KEYSTORE }}' | base64 -d > test.keystore"
+          fastlane generate_and_upload_apk build_type:release keystore_path:$(echo $(pwd)/test.keystore) store_password:${{ secrets.TEST_STORE_PASSWORD }} key_alias:${{ secrets.TEST_KEY_ALIAS }} key_password:${{ secrets.TEST_KEY_PASSWORD }}
+
+      #- name: Publish App Bundle to Play Store
+      #  run: |
+      #    sudo bash -c echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" | base64 -d > service_account.json
+      #    fastlane deploy_app_bundle_to_play_store service_account_json_path:$(echo $(pwd)/service_account.json)
