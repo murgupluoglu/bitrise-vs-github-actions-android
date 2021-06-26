@@ -33,4 +33,13 @@ platform :android do
         gradle(task: "test")
      end
 
+     lane :deploy_apk_to_play_store do |options|
+        upload_to_play_store(
+            track: "internal",
+            apk: "app/build/outputs/apk/release/release.apk",
+            json_key: options[:service_account_json_path],
+            skip_upload_images:true,
+            skip_upload_screenshots:true)
+     end
+
 end

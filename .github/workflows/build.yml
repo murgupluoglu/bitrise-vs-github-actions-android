@@ -41,4 +41,4 @@ jobs:
       #- name: Publish App Bundle to Play Store
       #  run: |
       #    sudo bash -c echo "${{ secrets.SERVICE_ACCOUNT_JSON }}" | base64 -d > service_account.json
-      #    fastlane deploy_app_bundle_to_play_store service_account_json_path:$(echo $(pwd)/service_account.json)
+      #    fastlane deploy_apk_to_play_store service_account_json_path:$(echo $(pwd)/service_account.json)
